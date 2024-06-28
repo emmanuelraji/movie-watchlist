@@ -1,0 +1,176 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+.container {
+  background-color: white;
+  max-width: 550px;
+  height: 620px;
+  flex: 1;
+  box-shadow: 0 0 2rem rgb(0 0 0 / 10%);
+}
+
+/* HEADER */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  height: 200px;
+  background-image: url("./assets/header.png");
+  color: white;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+/* SEARCH BAR */
+
+#search {
+  display: flex;
+  justify-content: center;
+  margin-top: -20px;
+}
+
+.search-bar {
+  display: flex;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  height: 38px;
+  overflow: hidden;
+}
+
+.search-bar img {
+  align-self: center;
+  padding: 9px 8px 9px 13px;
+  background-color: white;
+}
+
+input {
+  border: none;
+  width: 340px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  border: none;
+  border-left: 0.25px solid #d1d5db;
+  background-color: #f9fafb;
+  width: 120px;
+}
+
+/* MAIN SECTION */
+main {
+  height: calc(100% - 220px);
+  overflow: scroll;
+  padding: 0px 44px 0px 44px;
+}
+
+.no-movies-img {
+  display: none;
+}
+
+/* ARTICLE */
+
+article {
+  display: flex;
+  gap: 20px;
+}
+
+.movie-card {
+  height: 200px;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 21px 0;
+}
+
+.movie-card:first-child {
+  border-top: none;
+}
+
+.movie-card:last-child {
+  border-bottom: none;
+}
+
+.movie-card > img {
+  max-width: 28%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.movie-info {
+  height: 100%;
+  flex: 1;
+  font-size: 12px;
+}
+
+.movie-info div:first-child {
+  display: flex;
+  align-items: center;
+  margin-bottom: 11px;
+}
+
+.movie-info div:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding-right: 40px;
+}
+
+.movie-info p {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 20px;
+}
+
+.movie-info button {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  width: fit-content;
+  position: relative;
+  z-index: 1;
+}
+
+#watchlist-btn img,
+#watchlist-btn span {
+  z-index: -1;
+  position: relative;
+}
+
+#cards-container {
+  height: 100%;
+  margin-top: 40px;
+}
+
+.no-movies {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* WATCHLIST */
