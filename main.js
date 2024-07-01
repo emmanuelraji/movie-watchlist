@@ -3,13 +3,20 @@ const API_KEY = "";
 const form = document.querySelector("form");
 const cardContainer = document.getElementById("cards-container");
 
-let watchlist = [];
+let movieDetailsList = [];
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const formData = new FormData(form);
   const searchQuery = formData.get("search-query");
+  const moviesContainer = document.getElementById("no-movies");
+
+  // remove current elements in the main section
+  if (moviesContainer.checkVisibility()) {
+    document.querySelector("main").style.overflow = "scroll";
+    moviesContainer.style.display = "none";
+  }
 
   getMovies(searchQuery);
 });
@@ -29,7 +36,10 @@ async function getMovieDetails(movies) {
     movies.map((movie) => {
       fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&i=${movie.imdbID}`)
         .then((response) => response.json())
-        .then((data) => renderMovies(data));
+        .then((data) => {
+          renderMovies(data, cardContainer);
+          movieDetailsList.push(data);
+        });
     })
   );
 }
@@ -47,7 +57,7 @@ function renderMovies(movie) {
     <div>
       <span>${movie.Runtime}</span>
       <span>${movie.Genre}</span>
-      <button type="button" aria-label=“”  aria-pressed=“” id="watchlist-btn" value="${movie.Title}">
+      <button type="button" aria-label=“”  aria-pressed=“” id="watchlist-btn" data-id="${movie.imdbID}">
         <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
         <span>Watchlist</span>
       </button>
@@ -59,23 +69,25 @@ function renderMovies(movie) {
 }
 
 cardContainer.addEventListener("click", (event) => {
-  const { value } = event.target;
-  const selectedMovie = moviesArray.filter((movie) => movie.Title === value);
-  if (event.target.id === "watchlist-btn") {
+  const { id } = event.target.dataset;
+
+  const selectedMovie = movieDetailsList.filter((movie) => {
+    return movie.imdbID === id;
+  });
+
+  if (selectedMovie) {
     addToLocalStorage(selectedMovie);
   }
 });
 
 function addToLocalStorage(movie) {
-  console.log("clicked");
-  if (watchlist.length === 0) {
+  let watchlist = JSON.parse(localStorage.getItem("movies"));
+
+  if (watchlist === null) {
     localStorage.setItem("movies", JSON.stringify(movie));
-    watchlist.push(movie[0]);
     return;
   }
-  watchlist.push(movie[0]);
-  localStorage.setItem("movies", JSON.stringify(watchlist));
-  console.log(watchlist);
-}
 
-// localStorage.removeItem("movies");
+  watchlist.push(movie);
+  localStorage.setItem("movies", JSON.stringify(watchlist));
+}

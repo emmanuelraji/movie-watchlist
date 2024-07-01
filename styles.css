@@ -81,6 +81,7 @@ button {
   border-left: 0.25px solid #d1d5db;
   background-color: #f9fafb;
   width: 120px;
+  cursor: pointer;
 }
 
 /* MAIN SECTION */
