@@ -1,4 +1,4 @@
-const API_KEY = "";
+const API_KEY = "ca36afe8";
 
 const form = document.querySelector("form");
 const cardContainer = document.getElementById("cards-container");
@@ -75,19 +75,24 @@ cardContainer.addEventListener("click", (event) => {
     return movie.imdbID === id;
   });
 
+  console.log(`selected movie: ${selectedMovie}`);
+
   if (selectedMovie) {
     addToLocalStorage(selectedMovie);
   }
 });
 
 function addToLocalStorage(movie) {
-  let watchlist = JSON.parse(localStorage.getItem("movies"));
+  console.log(`add to storage function: ${movie}`);
 
-  if (watchlist === null) {
-    localStorage.setItem("movies", JSON.stringify(movie));
+  if (localStorage.movies) {
+    let watchlist = JSON.parse(localStorage.getItem("movies"));
+
+    watchlist.push(movie[0]);
+    localStorage.setItem("movies", JSON.stringify(watchlist));
+
     return;
   }
 
-  watchlist.push(movie);
-  localStorage.setItem("movies", JSON.stringify(watchlist));
+  localStorage.setItem("movies", JSON.stringify(movie));
 }
