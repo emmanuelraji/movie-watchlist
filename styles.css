@@ -4,6 +4,7 @@ body {
   align-items: center;
   height: 100vh;
   font-family: "Inter", sans-serif;
+  background-color: #f0f0f0;
 }
 
 .container {
@@ -12,6 +13,8 @@ body {
   height: 620px;
   flex: 1;
   box-shadow: 0 0 2rem rgb(0 0 0 / 10%);
+  display: flex;
+  flex-direction: column;
 }
 
 /* HEADER */
@@ -21,8 +24,11 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 0 40px;
-  height: 200px;
-  background-image: url("./assets/header.png");
+  min-height: 200px;
+  background-image: url("./assets/header.jpeg");
+  background-size: cover;
+  background-position: 0 20%;
+  box-shadow: inset 0 0 0 50vw rgba(0, 0, 0, 0.5);
   color: white;
 }
 
@@ -34,6 +40,7 @@ p {
 
 h2 {
   font-size: 18px;
+  font-weight: 400;
 }
 
 a {
@@ -51,16 +58,11 @@ a {
 
 .search-bar {
   display: flex;
+  /* align-items: center; */
   border: 1px solid #d1d5db;
-  border-radius: 10px;
+  border-radius: 6px;
   height: 38px;
   overflow: hidden;
-}
-
-.search-bar img {
-  align-self: center;
-  padding: 9px 8px 9px 13px;
-  background-color: white;
 }
 
 input {
@@ -82,14 +84,30 @@ button {
 }
 
 /* MAIN SECTION */
+
 main {
-  height: calc(100% - 220px);
-  overflow: scroll;
-  padding: 0px 44px 0px 44px;
+  /* height: calc(100% - 220px); */
+  /* overflow: scroll; */
+  padding: 0px 44px;
+  flex: 1;
 }
 
-.no-movies-img {
-  display: none;
+.no-movies {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-movies > div {
+  /* display: none; */
+  text-align: center;
+  color: #dfdddd;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.no-movies > div p {
+  margin-top: 15px;
 }
 
 /* ARTICLE */
@@ -167,10 +185,25 @@ article {
   margin-top: 40px;
 }
 
-.no-movies {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* ICONS */
+
+#film-icon {
+  font-size: 3.75rem;
+  color: #dfdddd;
+}
+
+.fa-star {
+  font-size: 0.825rem;
+  color: #fec654;
+}
+
+.fa-magnifying-glass {
+  color: #dfdddd;
+  background-color: #ffffff;
+  font-size: 15px;
+  color: #9ca3af;
+  cursor: text;
+  padding: 12px 10px;
 }
 
 /* WATCHLIST */
