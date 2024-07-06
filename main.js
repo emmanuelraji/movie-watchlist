@@ -37,7 +37,7 @@ async function getMovieDetails(movies) {
       fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&i=${movie.imdbID}`)
         .then((response) => response.json())
         .then((data) => {
-          renderMovies(data, cardContainer);
+          renderMovies(data);
           movieDetailsList.push(data);
         });
     })
@@ -47,23 +47,23 @@ async function getMovieDetails(movies) {
 function renderMovies(movie) {
   cardContainer.innerHTML += `
   <article class="movie-card">
-  <img src="${movie.Poster} atl="${movie.Title} poster image"/>
-  <div class="movie-info">
-    <div>
-      <h2>${movie.Title}</h2>
-      <i class="fa-solid fa-star" aria-hidden="true"></i>
-      <span>${movie.imdbRating}</span>
+    <img src="${movie.Poster} atl="${movie.Title} poster image"/>
+    <div class="movie-info">
+      <div>
+        <h2>${movie.Title}</h2>
+        <i class="fa-solid fa-star" aria-hidden="true"></i>
+        <span>${movie.imdbRating}</span>
+      </div>
+      <div>
+        <span>${movie.Runtime}</span>
+        <span>${movie.Genre}</span>
+        <button type="button" aria-label=“”  aria-pressed=“” id="watchlist-btn" data-id="${movie.imdbID}">
+          <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
+          <span>Watchlist</span>
+        </button>
+      </div>
+      <p>${movie.Plot}</p>
     </div>
-    <div>
-      <span>${movie.Runtime}</span>
-      <span>${movie.Genre}</span>
-      <button type="button" aria-label=“”  aria-pressed=“” id="watchlist-btn" data-id="${movie.imdbID}">
-        <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
-        <span>Watchlist</span>
-      </button>
-    </div>
-    <p>${movie.Plot}</p>
-  </div>
   </article>
   `;
 }
@@ -75,16 +75,12 @@ cardContainer.addEventListener("click", (event) => {
     return movie.imdbID === id;
   });
 
-  console.log(`selected movie: ${selectedMovie}`);
-
   if (selectedMovie) {
     addToLocalStorage(selectedMovie);
   }
 });
 
 function addToLocalStorage(movie) {
-  console.log(`add to storage function: ${movie}`);
-
   if (localStorage.movies) {
     let watchlist = JSON.parse(localStorage.getItem("movies"));
 

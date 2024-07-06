@@ -3,9 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movie Watchlist</title>
-    <script src="main.js" defer></script>
-    <link rel="icon" type="image/x-icon" href="/assets/favicon-black.png" />
+    <title>My Watchlist</title>
+    <script
+      src="https://kit.fontawesome.com/a6f7fcbc17.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="watchlist.js" defer></script>
+    <link rel="icon" type="image/x-icon" href="/assets/movie-icon.png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -15,13 +19,13 @@
         <a href="index.html">Search for movies </a>
       </header>
       <main class="no-movies">
-        <p>Your watchlist is looking a little empty...</p>
-        <p>Lets add some movies</p>
-        <img
-          src="./assets/Icon.png"
-          alt="start exploring icon"
-          class="no-movies-img"
-        />
+        <div>
+          <p>Your watchlist is looking a little empty...</p>
+          <a href="index.html">
+            <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
+            <p>Lets add some movies</p>
+          </a>
+        </div>
         <section id="cards-container"></section>
       </main>
     </div>

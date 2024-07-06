@@ -100,15 +100,25 @@ main {
 }
 
 .no-movies > div {
-  /* display: none; */
   text-align: center;
-  color: #dfdddd;
   font-weight: 700;
   font-size: 1.125rem;
+  color: #dfdddd;
 }
 
-.no-movies > div p {
-  margin-top: 15px;
+.no-movies > div p:first-child {
+  color: #dfdddd;
+  margin: 15px 0;
+  font-size: 18px;
+}
+
+.no-movies > div a {
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  color: #000000;
 }
 
 /* ARTICLE */
@@ -157,6 +167,10 @@ article {
   justify-content: space-between;
   margin-bottom: 8px;
   padding-right: 40px;
+}
+
+.movie-info > div > h2 {
+  margin-right: 10px;
 }
 
 .movie-info p {
