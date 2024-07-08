@@ -37,46 +37,72 @@ async function getMovieDetails(movies) {
       fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&i=${movie.imdbID}`)
         .then((response) => response.json())
         .then((data) => {
-          renderMovies(data);
           movieDetailsList.push(data);
+          renderMovies();
         });
     })
   );
 }
 
-function renderMovies(movie) {
-  cardContainer.innerHTML += `
-  <article class="movie-card">
-    <img src="${movie.Poster} atl="${movie.Title} poster image"/>
-    <div class="movie-info">
-      <div>
-        <h2>${movie.Title}</h2>
-        <i class="fa-solid fa-star" aria-hidden="true"></i>
-        <span>${movie.imdbRating}</span>
+function renderMovies() {
+  let html = "";
+
+  for (let movie of movieDetailsList) {
+    html += `
+    <article class="movie-card">
+      <img src="${movie.Poster} atl="${movie.Title} poster image"/>
+      <div class="movie-info">
+        <div>
+          <h2>${movie.Title}</h2>
+          <i class="fa-solid fa-star" aria-hidden="true"></i>
+          <span>${movie.imdbRating}</span>
+        </div>
+        <div>
+          <span>${movie.Runtime}</span>
+          <span>${movie.Genre}</span>
+          <button type="button" aria-label=“”  aria-pressed=“” id="watchlist-btn" data-id="${movie.imdbID}">
+            <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
+            <span>Watchlist</span>
+          </button>
+        </div>
+        <p>${movie.Plot}</p>
       </div>
-      <div>
-        <span>${movie.Runtime}</span>
-        <span>${movie.Genre}</span>
-        <button type="button" aria-label=“”  aria-pressed=“” id="watchlist-btn" data-id="${movie.imdbID}">
-          <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
-          <span>Watchlist</span>
-        </button>
-      </div>
-      <p>${movie.Plot}</p>
-    </div>
-  </article>
-  `;
+    </article>
+          `;
+  }
+
+  cardContainer.innerHTML = html;
 }
 
 cardContainer.addEventListener("click", (event) => {
+  const addToWatchlistBtn = event.target;
   const { id } = event.target.dataset;
+  const selectedBtn = document.querySelector(`[data-id=${id}]`);
 
-  const selectedMovie = movieDetailsList.filter((movie) => {
-    return movie.imdbID === id;
-  });
+  if (addToWatchlistBtn.type === "button") {
+    if (addToWatchlistBtn.firstElementChild.className.includes("plus")) {
+      selectedBtn.style.color = "#dfdddd";
+      selectedBtn.innerHTML = `
+        <i class="fa-solid fa-circle-minus" aria-hidden="true"></i>
+        <span>Remove</span>
+      `;
 
-  if (selectedMovie) {
-    addToLocalStorage(selectedMovie);
+      const selectedMovie = movieDetailsList.filter(
+        (movie) => movie.imdbID === id
+      );
+
+      if (selectedMovie) {
+        addToLocalStorage(selectedMovie);
+      }
+      return;
+    }
+
+    removeFromLocalStorage(id);
+    selectedBtn.style.color = "#000000";
+    selectedBtn.innerHTML = `
+    <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
+    <span>Watchlist</span>
+  `;
   }
 });
 
@@ -91,4 +117,12 @@ function addToLocalStorage(movie) {
   }
 
   localStorage.setItem("movies", JSON.stringify(movie));
+}
+
+function removeFromLocalStorage(id) {
+  let watchlist = JSON.parse(localStorage.getItem("movies"));
+
+  const newWatchlist = watchlist.filter((movie) => movie.imdbID !== id);
+
+  localStorage.setItem("movies", JSON.stringify(newWatchlist));
 }
