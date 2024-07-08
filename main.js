@@ -17,7 +17,6 @@ form.addEventListener("submit", (e) => {
     document.querySelector("main").style.overflow = "scroll";
     moviesContainer.style.display = "none";
   }
-
   getMovies(searchQuery);
 });
 
@@ -30,7 +29,7 @@ async function getMovies(query) {
 }
 
 async function getMovieDetails(movies) {
-  cardContainer.innerHTML = "";
+  movieDetailsList = [];
 
   await Promise.all(
     movies.map((movie) => {
@@ -45,9 +44,23 @@ async function getMovieDetails(movies) {
 }
 
 function renderMovies() {
+  let watchlistMovieIds = JSON.parse(localStorage.getItem("movies")).map(
+    (movie) => movie.imdbID
+  );
+
   let html = "";
 
   for (let movie of movieDetailsList) {
+    let active = "plus";
+    let iconText = "Watchlist";
+    let className = "";
+
+    if (watchlistMovieIds.includes(movie.imdbID)) {
+      active = "minus";
+      iconText = "Remove";
+      className = "clear";
+    }
+
     html += `
     <article class="movie-card">
       <img src="${movie.Poster} atl="${movie.Title} poster image"/>
@@ -60,17 +73,16 @@ function renderMovies() {
         <div>
           <span>${movie.Runtime}</span>
           <span>${movie.Genre}</span>
-          <button type="button" aria-label=“”  aria-pressed=“” id="watchlist-btn" data-id="${movie.imdbID}">
-            <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
-            <span>Watchlist</span>
+          <button type="button" aria-label=“”  aria-pressed=“” id="watchlist-btn" data-id="${movie.imdbID}" class=${className}>
+            <i class="fa-solid fa-circle-${active}" aria-hidden="true"></i>
+            <span>${iconText}</span>
           </button>
         </div>
         <p>${movie.Plot}</p>
       </div>
     </article>
-          `;
+    `;
   }
-
   cardContainer.innerHTML = html;
 }
 
@@ -109,20 +121,15 @@ cardContainer.addEventListener("click", (event) => {
 function addToLocalStorage(movie) {
   if (localStorage.movies) {
     let watchlist = JSON.parse(localStorage.getItem("movies"));
-
     watchlist.push(movie[0]);
     localStorage.setItem("movies", JSON.stringify(watchlist));
-
     return;
   }
-
   localStorage.setItem("movies", JSON.stringify(movie));
 }
 
 function removeFromLocalStorage(id) {
   let watchlist = JSON.parse(localStorage.getItem("movies"));
-
   const newWatchlist = watchlist.filter((movie) => movie.imdbID !== id);
-
   localStorage.setItem("movies", JSON.stringify(newWatchlist));
 }
