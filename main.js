@@ -29,6 +29,7 @@ async function getMovies(query) {
 }
 
 async function getMovieDetails(movies) {
+  // reset movies list
   movieDetailsList = [];
 
   await Promise.all(

@@ -37,18 +37,17 @@ function renderMovies() {
     </article>
           `;
   }
-
   cardContainer.innerHTML = html;
 }
 
 cardContainer.addEventListener("click", (event) => {
   const { id } = event.target.dataset;
   removeFromLocalStorage(id);
-  getMovies(watchlist);
 });
 
 function removeFromLocalStorage(id) {
   const newWatchlist = watchlist.filter((movie) => movie.imdbID !== id);
   localStorage.setItem("movies", JSON.stringify(newWatchlist));
   watchlist = newWatchlist;
+  renderMovies();
 }

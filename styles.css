@@ -58,7 +58,6 @@ a {
 
 .search-bar {
   display: flex;
-  /* align-items: center; */
   border: 1px solid #d1d5db;
   border-radius: 6px;
   height: 38px;
@@ -87,8 +86,6 @@ button {
 /* MAIN SECTION */
 
 main {
-  /* height: calc(100% - 220px); */
-  /* overflow: scroll; */
   padding: 0px 44px;
   flex: 1;
 }
@@ -224,5 +221,3 @@ article {
   cursor: text;
   padding: 12px 10px;
 }
-
-/* WATCHLIST */
