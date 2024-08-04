@@ -22,7 +22,7 @@ form.addEventListener("submit", (e) => {
 
 async function getMovies(query) {
   const response = await fetch(
-    `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
+    `https://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
   );
   const jsonResponse = await response.json();
   getMovieDetails(jsonResponse.Search);
@@ -94,7 +94,7 @@ cardContainer.addEventListener("click", (event) => {
   const { id } = event.target.dataset;
   const selectedBtn = document.querySelector(`[data-id=${id}]`);
 
-  // checks to see if the watchlist button was clicked
+  // check to see if the watchlist button was clicked
   if (addToWatchlistBtn.type === "button") {
     if (addToWatchlistBtn.firstElementChild.className.includes("plus")) {
       selectedBtn.style.color = "#dfdddd";
