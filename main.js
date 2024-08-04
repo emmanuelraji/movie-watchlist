@@ -45,9 +45,9 @@ async function getMovieDetails(movies) {
 }
 
 function renderMovies() {
-  let watchlistMovieIds = JSON.parse(localStorage.getItem("movies")).map(
-    (movie) => movie.imdbID
-  );
+  let watchlistMovieIds =
+    localStorage.movies &&
+    JSON.parse(localStorage.getItem("movies")).map((movie) => movie.imdbID);
 
   let html = "";
 
@@ -57,7 +57,7 @@ function renderMovies() {
     let className = "";
 
     // check if movie already exists in watchlist
-    if (watchlistMovieIds.includes(movie.imdbID)) {
+    if (watchlistMovieIds && watchlistMovieIds.includes(movie.imdbID)) {
       active = "minus";
       iconText = "Remove";
       className = "clear";
