@@ -34,7 +34,7 @@ async function getMovieDetails(movies) {
 
   await Promise.all(
     movies.map((movie) => {
-      fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&i=${movie.imdbID}`)
+      fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${movie.imdbID}`)
         .then((response) => response.json())
         .then((data) => {
           movieDetailsList.push(data);
@@ -56,6 +56,7 @@ function renderMovies() {
     let iconText = "Watchlist";
     let className = "";
 
+    // check if movie already exists in watchlist
     if (watchlistMovieIds.includes(movie.imdbID)) {
       active = "minus";
       iconText = "Remove";
@@ -87,11 +88,13 @@ function renderMovies() {
   cardContainer.innerHTML = html;
 }
 
+// add event listener to the movie card container since watchlist button has not been created yet
 cardContainer.addEventListener("click", (event) => {
   const addToWatchlistBtn = event.target;
   const { id } = event.target.dataset;
   const selectedBtn = document.querySelector(`[data-id=${id}]`);
 
+  // checks to see if the watchlist button was clicked
   if (addToWatchlistBtn.type === "button") {
     if (addToWatchlistBtn.firstElementChild.className.includes("plus")) {
       selectedBtn.style.color = "#dfdddd";
